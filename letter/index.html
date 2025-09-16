@@ -204,21 +204,56 @@
     <audio id="bgMusic" src="/wave to earth - bad (lyrics).mp3"></audio>
 
     <script>
+      const pictures = ["/2.jpg", "/3.jpg", "/4.jpg", "/5.jpg"];
+
+      function createFallingImages() {
+        const numPics = 20; // number of falling images
+        for (let i = 0; i < numPics; i++) {
+          const img = document.createElement("img");
+          img.src = pictures[Math.floor(Math.random() * pictures.length)];
+          img.style.position = "absolute";
+          img.style.width = 40 + Math.random() * 30 + "px"; // random size
+          img.style.top = "-100px"; // start above viewport
+          img.style.left = Math.random() * 100 + "vw"; // random horizontal position
+          img.style.opacity = Math.random() * 0.8 + 0.2;
+          img.style.zIndex = "1";
+          img.style.pointerEvents = "none";
+
+          // Animate falling
+          const duration = 5 + Math.random() * 5; // 5-10s
+          img.style.transition = `transform ${duration}s linear, opacity ${duration}s linear`;
+          setTimeout(() => {
+            img.style.transform = `translateY(110vh)`; // move to bottom
+            img.style.opacity = "0";
+          }, 50);
+
+          // Remove after animation
+          setTimeout(() => img.remove(), duration * 1000);
+
+          document.body.appendChild(img);
+        }
+      }
+
       const heart = document.getElementById("heart");
       const notebook = document.getElementById("notebook");
       const bgMusic = document.getElementById("bgMusic");
       const musicUI = document.getElementById("musicUI");
 
       heart.addEventListener("click", () => {
-        heart.style.opacity = "0"; // hide heart
-        notebook.style.display = "block"; // show notebook
+        heart.style.opacity = "0";
+        notebook.style.display = "block";
         setTimeout(() => {
           notebook.classList.add("show");
-          musicUI.style.display = "flex"; // show music UI
+          musicUI.style.display = "flex";
+
+          // Start raining images
+          createFallingImages();
+          // Optionally, keep creating new ones every few seconds
+          setInterval(createFallingImages, 2000);
         }, 10);
 
-        // Fade-in music volume
-        bgMusic.volume = 0; // start silent
+        // Fade-in music as before
+        bgMusic.volume = 0;
         bgMusic.play();
         let vol = 0;
         const fadeIn = setInterval(() => {
