@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      * {
+        font-family: sans-serif;
+      }
+      span {
+        color: #2b2b2b;
+        text-align: center;
+        font-weight: 600;
+      }
+      .header {
+        font-size: 22px;
+        margin-bottom: 24px;
+        margin-top: 12px;
+      }
+      .container {
+        border-radius: 12px;
+        width: 100%;
+        height: auto;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 32px;
+      }
+
+      .options {
+        flex-direction: row;
+        justify-content: center;
+        gap: 24px;
+        margin-top: 24px;
+        flex-wrap: wrap;
+      }
+      .option-label {
+        font-size: 20px;
+        font-weight: 500;
+        color: #333333;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        margin-top: 12px;
+        margin-bottom: 12px;
+      }
+
+      input[type="radio"] {
+        transform: scale(1.4);
+        margin-right: 8px;
+        cursor: pointer;
+      }
+
+      .btn {
+        margin-top: 24px;
+        padding: 12px 24px;
+        background-color: #ffb7ce;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .result {
+        margin-top: 16px;
+        font-size: 18px;
+        font-weight: bold;
+        transition: font-size 0.2s ease-in-out;
+      }
+    </style>
+  </head>
+  <body
+    style="
+      background-color: #ffb7ce;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+      padding-left: 32px;
+      padding-right: 32px;
+    "
+  >
+    <img
+      style="width: 128px; height: 128px"
+      src="https://i.pinimg.com/736x/d4/26/60/d4266077b09e52a30ef8d53fc6faac3c.jpg"
+    />
+    <span class="header">Girlfriend Verification</span>
+
+    <div class="container">
+      <span style="color: #333333; font-size: 28px"
+        >Jawab Dengan Ikhlas yah</span
+      >
+
+      <div class="options">
+        <label class="option-label">
+          <input type="radio" name="question" value="A" /> Saya teman biasa
+        </label>
+        <label class="option-label">
+          <input type="radio" name="question" value="B" /> Saya pacarnya ❤️
+          (Jawaban Benar)
+        </label>
+        <label class="option-label">
+          <input type="radio" name="question" value="C" /> Saya orang asing
+        </label>
+      </div>
+
+      <!-- Submit button -->
+      <button class="btn" onclick="checkAnswer()">Submit</button>
+
+      <!-- Result message -->
+      <div class="result" id="result"></div>
+    </div>
+    <script>
+      let wrongAttempts = 0;
+
+      function checkAnswer() {
+        const selected = document.querySelector(
+          'input[name="question"]:checked'
+        );
+        const resultEl = document.getElementById("result");
+
+        if (!selected) {
+          resultEl.textContent = "⚠️ Silakan pilih salah satu jawaban!";
+          resultEl.style.color = "orange";
+          resultEl.style.fontSize = "18px";
+          return;
+        }
+
+        if (selected.value === "B") {
+          // Correct answer callback
+          resultEl.textContent = "hehehe wopyu ❤️";
+          resultEl.style.color = "green";
+          resultEl.style.fontSize = "18px";
+          wrongAttempts = 0; // reset attempts if correct
+          console.log("Callback triggered: Correct answer selected!");
+
+          // Wait 3 seconds then redirect
+          setTimeout(() => {
+            window.location.href = "/letter";
+          }, 3000);
+        } else {
+          wrongAttempts++;
+          resultEl.textContent = "YAAAKINNN???!?!??!";
+          resultEl.style.color = "red";
+          resultEl.style.fontSize = `${18 + wrongAttempts * 4}px`; // increase font size
+        }
+      }
+    </script>
+  </body>
+</html>
